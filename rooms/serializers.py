@@ -14,6 +14,7 @@ class AmenitySerializer(serializers.ModelSerializer):
 
 
 class RoomListSerializer(serializers.ModelSerializer):
+    # SerializerMethodField: 모델에 없는 필드를 추가 / 모델에 있는 값을 변경해서 새로운 필드의 값으로 사용
     rating = serializers.SerializerMethodField()
 
     class Meta:
