@@ -155,7 +155,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 ## CUSTOM
 # Auth
-
 AUTH_USER_MODEL = "users.User"
 
 # Media
