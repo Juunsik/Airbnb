@@ -21,6 +21,8 @@ class ExperienceListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Experience
         fields = (
+            "id",
+            "host",
             "country",
             "city",
             "name",
@@ -36,7 +38,12 @@ class ExperienceDetailSerializer(serializers.ModelSerializer):
     category = CategorySerializer(read_only=True)
     photos = PhotoSerializer(read_only=True, many=True)
     videos = VideoSerializer(read_only=True, many=True)
+    is_owner = serializers.SerializerMethodField()
 
     class Meta:
         model = Experience
         fields = "__all__"
+
+    def get_is_owner(self, experience):
+        request = self.context["request"]
+        return experience.host == request.user
