@@ -164,3 +164,12 @@ MEDIA_URL = "user-uploads/"
 
 # Pagination
 PAGE_SIZE = 3
+
+# Custom Authentication
+
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.SessionAuthentication",
+        "config.authentication.TrustMeBroAuthentication",
+    ]
+}
