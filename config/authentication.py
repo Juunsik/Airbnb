@@ -1,3 +1,5 @@
+import jwt
+import os
 from rest_framework.authentication import BaseAuthentication
 from rest_framework.exceptions import AuthenticationFailed
 from users.models import User
@@ -13,3 +15,23 @@ class TrustMeBroAuthentication(BaseAuthentication):
             return (user, None)  # user 만 리턴이 아닌 (user, None)으로 리턴해야 한다.
         except User.DoesNotExist:
             raise AuthenticationFailed
+
+
+class JWTAuthentication(BaseAuthentication):
+    def authenticate(self, request):
+        token = request.headers.get("Jwt")
+        if not token:
+            return None
+        decoded = jwt.decode(
+            token,
+            os.environ.get("SECRET_KEY"),
+            algorithms="HS256",
+        )
+        pk = decoded.get("pk")
+        if not pk:
+            raise AuthenticationFailed("Invalid Token")
+        try:
+            user = User.objects.get(pk=pk)
+            return (user, None)
+        except User.DoesNotExist:
+            raise AuthenticationFailed("User not Found")

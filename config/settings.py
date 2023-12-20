@@ -167,11 +167,11 @@ MEDIA_URL = "user-uploads/"
 PAGE_SIZE = 3
 
 # Custom Authentication
-
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
-        "rest_framework.authentication.SessionAuthentication",
-        "config.authentication.TrustMeBroAuthentication",
-        "rest_framework.authentication.TokenAuthentication",
+        "rest_framework.authentication.SessionAuthentication",  # Default
+        "config.authentication.TrustMeBroAuthentication",  # Custom
+        "rest_framework.authentication.TokenAuthentication",  # Token
+        "config.authentication.JWTAuthentication",  # JWT
     ]
 }
