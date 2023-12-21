@@ -108,6 +108,9 @@ DATABASES = {
         "PORT": os.environ.get("DB_PORT"),
         "USER": os.environ.get("DB_USER"),
         "PASSWORD": os.environ.get("DB_PASSWORD"),
+        "TEST": {
+            "NAME": "test_django_airbnb",
+        },
     }
 }
 
@@ -173,5 +176,5 @@ REST_FRAMEWORK = {
         "config.authentication.TrustMeBroAuthentication",  # Custom
         "rest_framework.authentication.TokenAuthentication",  # Token
         "config.authentication.JWTAuthentication",  # JWT
-    ]
+    ],
 }
