@@ -109,7 +109,7 @@ DATABASES = {
         "USER": os.environ.get("DB_USER"),
         "PASSWORD": os.environ.get("DB_PASSWORD"),
         "TEST": {
-            "NAME": "test_django_airbnb",
+            "NAME": os.environ.get("TEST_NAME"),
         },
     }
 }
