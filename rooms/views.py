@@ -1,8 +1,9 @@
 from django.conf import settings
 from django.db import transaction
 from django.utils import timezone
+from rest_framework.generics import get_object_or_404
 from rest_framework.views import APIView
-from rest_framework.status import HTTP_204_NO_CONTENT
+from rest_framework.status import HTTP_204_NO_CONTENT, HTTP_400_BAD_REQUEST
 from rest_framework.response import Response
 from rest_framework.exceptions import (
     NotFound,
@@ -69,7 +70,7 @@ class Rooms(APIView):
             # serializer = RoomDetailSerializer(room)
             # return Response(serializer.data)
         else:
-            return Response(serializer.errors)
+            return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
 
 
 class RoomDetail(APIView):
@@ -276,15 +277,12 @@ class Amenities(APIView):
             amenity = serializer.save()
             return Response(serializers.AmenitySerializer(amenity).data)
         else:
-            return Response(serializer.errors)
+            return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
 
 
 class AmenityDetail(APIView):
     def get_object(self, pk):
-        try:
-            return Amenity.objects.get(pk=pk)
-        except Amenity.DoesNotExist:
-            return NotFound
+        return get_object_or_404(Amenity, pk=pk)
 
     def get(self, request, pk):
         amenity = self.get_object(pk)
@@ -300,7 +298,7 @@ class AmenityDetail(APIView):
             updated_amenity = serializer.save()
             return Response(serializers.AmenitySerializer(updated_amenity).data)
         else:
-            return Response(serializer.errors)
+            return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
 
     def delete(self, request, pk):
         amenity = self.get_object(pk)
